@@ -1,50 +1,47 @@
+const Booking = require("./models/Booking");
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
+//const fs = require("fs");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.post("/api/bookings", (req, res) => {
-    const booking = req.body;
-
-    let bookings = [];
-
-    if (fs.existsSync("bookings.json")) {
-        const data = fs.readFileSync("bookings.json");
-        bookings = JSON.parse(data);
-    }
-
-    bookings.push({
-        ...booking,
-        createdAt: new Date().toISOString()
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("✅ MongoDB Connected");
+    })
+    .catch((err) => {
+        console.error("❌ MongoDB Connection Error:", err);
     });
 
-    fs.writeFileSync(
-        "bookings.json",
-        JSON.stringify(bookings, null, 2)
-    );
 
-    console.log("Booking Saved:", booking);
+app.get("/api/bookings", async (req, res) => {
+    try {
+        console.log("Fetching from MongoDB...");
 
-    res.json({
-        message: "Booking saved successfully"
-    });
-});
+        const bookings = await Booking.find()
+            .sort({ createdAt: -1 });
 
-app.get("/api/bookings", (req, res) => {
-    if (!fs.existsSync("bookings.json")) {
-        return res.json([]);
+        console.log(bookings);
+
+        res.json(bookings);
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Error fetching bookings"
+        });
     }
-
-    const data = fs.readFileSync("bookings.json");
-    const bookings = JSON.parse(data);
-
-    res.json(bookings);
 });
 
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
