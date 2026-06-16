@@ -40,6 +40,29 @@ app.get("/api/bookings", async (req, res) => {
     }
 });
 
+app.post("/api/bookings", async (req, res) => {
+    try {
+        const booking = new Booking(req.body);
+
+        await booking.save();
+
+        console.log("Booking Saved To MongoDB");
+
+        res.json({
+            success: true,
+            message: "Booking saved successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error saving booking"
+        });
+    }
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
