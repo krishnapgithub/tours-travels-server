@@ -1,0 +1,26 @@
+[
+  {
+    "name": "KP",
+    "email": "krishna.kotamarthi@gmail.cm",
+    "tour": "Dubai Tour",
+    "createdAt": "2026-06-15T22:57:17.147Z"
+  },
+  {
+    "name": "Mythri",
+    "email": "krishna.kotamarthi@gmail.cm",
+    "tour": "Kerala Tour",
+    "createdAt": "2026-06-15T23:12:41.866Z"
+  },
+  {
+    "name": "Kalyan",
+    "email": "kkrishnaprasad25@gmail.com",
+    "tour": "Tirupati Package",
+    "createdAt": "2026-06-15T23:15:25.552Z"
+  },
+  {
+    "name": "Parnika",
+    "email": "kkrishnaprasad25@gmail.com",
+    "tour": "Dubai Tour",
+    "createdAt": "2026-06-15T23:18:57.520Z"
+  }
+]
