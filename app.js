@@ -42,6 +42,8 @@ app.get("/api/bookings", async (req, res) => {
 
 app.post("/api/bookings", async (req, res) => {
     try {
+        console.log("Received Data:", req.body);
+
         const booking = new Booking(req.body);
 
         await booking.save();
